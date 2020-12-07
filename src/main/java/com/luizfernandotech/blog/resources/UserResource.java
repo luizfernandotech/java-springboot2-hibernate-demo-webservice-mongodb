@@ -1,6 +1,7 @@
 package com.luizfernandotech.blog.resources;
 
 import com.luizfernandotech.blog.dto.UserDTO;
+import com.luizfernandotech.blog.entities.Post;
 import com.luizfernandotech.blog.entities.User;
 import com.luizfernandotech.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,5 +56,11 @@ public class UserResource {
         obj.setId(id);
         service.update(obj);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping(value = "/{id}/posts")
+    public ResponseEntity<List<Post>> findPosts(@PathVariable String id) {
+        User obj = service.findById(id);
+        return ResponseEntity.ok().body(obj.getPosts());
     }
 }
