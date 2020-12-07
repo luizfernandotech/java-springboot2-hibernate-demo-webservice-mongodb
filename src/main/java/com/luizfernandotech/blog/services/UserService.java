@@ -1,5 +1,6 @@
 package com.luizfernandotech.blog.services;
 
+import com.luizfernandotech.blog.dto.UserDTO;
 import com.luizfernandotech.blog.entities.User;
 import com.luizfernandotech.blog.repository.UserRepository;
 import com.luizfernandotech.blog.services.exeption.ObjectNotFoundException;
@@ -22,5 +23,13 @@ public class UserService {
     public User findById(String id) {
         Optional<User> obj = repository.findById(id);
         return obj.orElseThrow(() -> new ObjectNotFoundException("Object not found"));
+    }
+
+    public User insert(User obj) {
+        return repository.insert(obj);
+    }
+
+    public User fromDTO(UserDTO obj) {
+        return new User(obj.getId(), obj.getName(), obj.getEmail());
     }
 }
