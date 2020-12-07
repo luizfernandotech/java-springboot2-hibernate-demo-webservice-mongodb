@@ -1,5 +1,6 @@
 package com.luizfernandotech.blog.resources;
 
+import com.luizfernandotech.blog.dto.UserDTO;
 import com.luizfernandotech.blog.entities.User;
 import com.luizfernandotech.blog.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 
 @RestController
@@ -19,9 +21,10 @@ public class UserResource {
     UserService service;
 
     @GetMapping
-    public ResponseEntity<List<User>> findAll() {
+    public ResponseEntity<List<UserDTO>> findAll() {
 
         List<User> list = service.findAll();
-        return ResponseEntity.ok().body(list);
+        List<UserDTO> listDto = list.stream().map(user -> new UserDTO(user)).collect(Collectors.toList());
+        return ResponseEntity.ok().body(listDto);
     }
 }
