@@ -1,13 +1,13 @@
 package com.luizfernandotech.blog.resources;
 
 import com.luizfernandotech.blog.entities.User;
+import com.luizfernandotech.blog.services.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -15,14 +15,13 @@ import java.util.List;
 @RequestMapping(value = "/users")
 public class UserResource {
 
+    @Autowired
+    UserService service;
+
     @GetMapping
     public ResponseEntity<List<User>> findAll() {
-        User u1 = new User("1", "Maria Silva", "maria@gmail.com");
-        User u2 = new User("1", "Alex Silva", "alex@gmail.com");
 
-        List<User> list = new ArrayList<>();
-        list.addAll(Arrays.asList(u1, u2));
-
+        List<User> list = service.findAll();
         return ResponseEntity.ok().body(list);
     }
 }
